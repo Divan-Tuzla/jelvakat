@@ -1,0 +1,50 @@
+{
+  "name": "Jel’ vakat? by Divan",
+  "short_name": "Jel’ vakat?",
+  "description": "Tvoj džepni pomoćnik za namaske vakte",
+  "lang": "bs",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": [
+    "fullscreen",
+    "standalone"
+  ],
+  "orientation": "portrait-primary",
+  "background_color": "#070F22",
+  "theme_color": "#070F22",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": [
+    "lifestyle",
+    "utilities",
+    "religious"
+  ],
+  "id": "/moj-namaz-by-divan/",
+  "prefer_related_applications": false
+}
