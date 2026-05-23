@@ -1,0 +1,4 @@
+Contact: mailto:udruzenjedivantuzla@gmail.com
+Expires: 2027-05-22T00:00:00.000Z
+Preferred-Languages: bs, en
+Canonical: https://jelvakat.ba/.well-known/security.txt
