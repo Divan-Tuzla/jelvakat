@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jelvakat.ba/sitemap.xml
