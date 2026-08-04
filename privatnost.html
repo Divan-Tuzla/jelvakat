@@ -136,15 +136,27 @@
       što aplikaciji služi i da prepozna region radi ispravne vaktije.
       <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener noreferrer" target="_blank">Njihova politika privatnosti</a>.</li>
   </ul>
+  <p>Koordinate se prema tim servisima šalju <strong>zaokružene</strong>, jer im veća
+  tačnost nije potrebna: prognozi na oko kilometar, nazivu mjesta na oko sto metara.
+  Puna tačnost tvoje pozicije ostaje na uređaju i koristi se samo za proračun vakata i
+  smjera Kible, koji se nikada ne šalju nikome.</p>
+
   <p>Kao i kod svakog poziva preko interneta, ti servisi u tom trenutku vide IP adresu
   uređaja. Ako aplikaciju koristiš offline ili s ručno unesenom lokacijom bez prognoze,
   ni ti pozivi se ne dešavaju.</p>
 
+  <p>Uz to, sama stranica se poslužuje preko <strong>GitHub Pages</strong>. Kao i svaki
+  web server, on pri učitavanju aplikacije vidi IP adresu i vrstu preglednika. To se
+  dešava i kada nema nijednog drugog poziva, jer je to način na koji aplikacija uopšte
+  dolazi do tebe.</p>
+
   <h2>Šta ostaje na uređaju</h2>
   <p>Aplikacija u memoriji preglednika (lokalna pohrana) čuva samo ono što joj treba da bi
   se brzo otvorila: posljednju poznatu lokaciju i naziv mjesta, ručno izabranu lokaciju ako
-  si je postavio, kratkotrajno zapamćenu prognozu i oznaku verzije. <strong>Ti podaci ne
-  napuštaju uređaj</strong> i nestaju kad obrišeš podatke aplikacije ili je deinstaliraš.</p>
+  si je postavio, kratkotrajno zapamćenu prognozu, oznaku verzije i podatak da si već vidio
+  poneki savjet u sučelju. Uz to, radi rada bez interneta, čuva se i kopija same aplikacije
+  (stranica, fontovi, ikone). <strong>Ti podaci ne napuštaju uređaj</strong> i nestaju kad
+  obrišeš podatke aplikacije ili je deinstaliraš.</p>
 
   <h2>Dozvole koje aplikacija može tražiti</h2>
   <ul>

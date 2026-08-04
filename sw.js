@@ -13,7 +13,7 @@
 // Verzija keša se mijenja sa svakom novom verzijom app-a. Stari keš se briše.
 // ════════════════════════════════════════════════════════════════════════════
 
-const CACHE_VERSION = 'jv-v3.6.7';
+const CACHE_VERSION = 'jv-v3.6.14';
 const APP_SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -86,16 +86,34 @@ self.addEventListener('fetch', event => {
 });
 
 // ── STRATEGIJE ──────────────────────────────────────────────────────────────
+
+// ⚠ v3.6.9 (audit 04.08.2026.) — NAVIGACIJA SE KEŠIRA BEZ QUERY STRINGA.
+//
+// Ranije se keširalo pod PUNIM URL-om, a čitalo bez `ignoreSearch`. Posljedica:
+// link podijeljen preko WhatsAppa ili Facebooka dolazi kao `/?fbclid=...`, pa je
+// taj korisnik OFFLINE dobijao golu poruku o grešci iako je cijela app keširana
+// pod `/`. Za app za namaska vremena offline put je upravo onaj koji je bitan.
+// Uz to je svaki različit query trajno dodavao novu kopiju app-e u keš (~310 KB),
+// pa je keš neograničeno rastao do izbacivanja cijelog origina iz kvote.
+//
+// Sada: ključ je uvijek origin + putanja, a čitanje ide s `ignoreSearch`.
+// TEST_MODE parametri (`?lat=&lng=&time=`) i dalje rade — oni se čitaju u
+// aplikaciji iz stvarnog URL-a, keš samo poslužuje isti app shell.
+function kljucBezUpita(req) {
+  const url = new URL(req.url);
+  return new Request(url.origin + url.pathname, { method: 'GET' });
+}
+
 async function networkFirst(req) {
   try {
     const fresh = await fetch(req);
     if (fresh && fresh.status === 200) {
       const cache = await caches.open(APP_SHELL_CACHE);
-      cache.put(req, fresh.clone());
+      cache.put(kljucBezUpita(req), fresh.clone());
     }
     return fresh;
   } catch (e) {
-    const cached = await caches.match(req);
+    const cached = await caches.match(req, { ignoreSearch: true });
     if (cached) return cached;
     // Fallback ako ni keš nema
     return new Response('Offline. App je dostupna kad imaš internet.', {
