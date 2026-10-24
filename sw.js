@@ -13,7 +13,7 @@
 // Verzija keša se mijenja sa svakom novom verzijom app-a. Stari keš se briše.
 // ════════════════════════════════════════════════════════════════════════════
 
-const CACHE_VERSION = 'jv-v3.7.3';
+const CACHE_VERSION = 'jv-v3.9.0';
 const APP_SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -30,8 +30,12 @@ const APP_SHELL = [
 const FONT_ASSETS = [
   './fonts/cormorant-garamond-latin.woff2',
   './fonts/cormorant-garamond-latin-ext.woff2',
-  './fonts/amiri-400-latin.woff2',
-  './fonts/amiri-400-latin-ext.woff2'
+  './fonts/inter-400-latin.woff2',
+  './fonts/inter-400-latin-ext.woff2',
+  './fonts/inter-500-latin.woff2',
+  './fonts/inter-500-latin-ext.woff2',
+  './fonts/inter-600-latin.woff2',
+  './fonts/inter-600-latin-ext.woff2'
 ];
 
 // API hostovi koji se NIKADA ne keširaju

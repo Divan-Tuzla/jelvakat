@@ -7,14 +7,21 @@
 <meta name="color-scheme" content="dark"/>
 <title>Stranica nije pronađena · Jel' vakat?</title>
 <style>
+  /* v3.9.0: ista slova kao app (self-host, bez vanjskog poziva) */
+  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300 600;font-display:swap;src:url('fonts/cormorant-garamond-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300 600;font-display:swap;src:url('fonts/cormorant-garamond-latin-ext.woff2') format('woff2');unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-400-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-400-latin-ext.woff2') format('woff2');unicode-range:U+0100-017F,U+0218-021B,U+1E00-1E9F}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/inter-500-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/inter-500-latin-ext.woff2') format('woff2');unicode-range:U+0100-017F,U+0218-021B,U+1E00-1E9F}
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;min-height:100vh;background:#070F22;color:#E8DCC4;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  html,body{margin:0;padding:0;min-height:100vh;background:linear-gradient(180deg,#070F22 0%,#0A1730 60%,#0C1B3E 100%);color:#F5EDD6;font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;font-feature-settings:"lnum" 1}
   body{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center}
-  .num{font-size:5rem;font-weight:300;letter-spacing:0.05em;color:#D4AF37;margin:0;line-height:1;font-variant-numeric:lining-nums}
-  h1{font-size:1.4rem;font-weight:400;margin:18px 0 10px;color:#E8DCC4;letter-spacing:0.01em}
-  p{font-size:1rem;line-height:1.55;color:rgba(232,220,196,0.7);max-width:34ch;margin:0 0 32px}
-  a{display:inline-block;padding:12px 28px;border:1px solid rgba(212,175,55,0.5);border-radius:999px;color:#D4AF37;text-decoration:none;font-size:0.95rem;letter-spacing:0.02em;transition:background 0.2s,border-color 0.2s}
-  a:hover,a:focus{background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.8);outline:none}
+  .num{font-family:'Cormorant Garamond',Georgia,serif;font-size:6rem;font-weight:300;letter-spacing:0.04em;color:#C9A84C;margin:0;line-height:1;font-variant-numeric:lining-nums tabular-nums}
+  h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.6rem;font-weight:500;margin:16px 0 10px;color:#F2E5C0;letter-spacing:0.01em}
+  p{font-size:0.95rem;line-height:1.55;color:rgba(245,237,214,0.72);max-width:34ch;margin:0 0 32px}
+  a{display:inline-block;padding:12px 28px;border:1px solid rgba(201,168,76,0.55);border-radius:999px;color:#F2E5C0;background:linear-gradient(165deg,#10204A 0%,#0B193A 100%);box-shadow:0 2px 12px rgba(7,15,34,0.3),inset 0 1px 0 rgba(245,237,214,0.06);text-decoration:none;font-size:0.9rem;font-weight:500;letter-spacing:0.03em;transition:background 0.2s,border-color 0.2s}
+  a:hover,a:focus{border-color:rgba(201,168,76,0.9);outline:none}
 </style>
 </head>
 <body>
