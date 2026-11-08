@@ -102,7 +102,7 @@
   </header>
 
   <h1>Politika privatnosti</h1>
-  <p class="updated">Posljednja izmjena: 21. oktobar 2026.</p>
+  <p class="updated">Posljednja izmjena: 8. novembar 2026.</p>
 
   <div class="lead">
     <p><strong>Ukratko:</strong> aplikacija nema korisničke naloge, nema reklama i ne prati
@@ -159,7 +159,9 @@
 
   <h2>Šta ostaje na uređaju</h2>
   <p>Aplikacija u memoriji preglednika (lokalna pohrana) čuva samo ono što joj treba da bi
-  se brzo otvorila: posljednju poznatu lokaciju i naziv mjesta, ručno izabranu lokaciju ako
+  se brzo otvorila: posljednju poznatu lokaciju (koordinate zaokružene na oko sto metara,
+  isto što odlazi servisu za naziv mjesta) i naziv mjesta, da bi vakti bili na ekranu odmah
+  dok se lokacija u pozadini potvrđuje; ručno izabranu lokaciju ako
   si je postavio, kratkotrajno zapamćenu prognozu, oznaku verzije, podatak da si već vidio
   poneki savjet u sučelju i vrijeme kad si zadnji put odgodio ponudu za instalaciju. Uz to,
   radi rada bez interneta, čuva se i kopija same aplikacije (stranica, fontovi, ikone). <strong>Ti podaci ne napuštaju uređaj</strong> i nestaju kad
@@ -168,8 +170,10 @@
   <h2>Dozvole koje aplikacija može tražiti</h2>
   <ul>
     <li><strong>Lokacija</strong>: za vakte i smjer Kible. Nije obavezna: postoji ručni unos.</li>
-    <li><strong>Senzori smjera (kompas)</strong>: samo dok je otvoren ekran Kible, da bi se
-      igla okretala prema Mekki. Očitanja se koriste u tom trenutku i nigdje ne odlaze.</li>
+    <li><strong>Senzori smjera (kompas)</strong>: samo kad ih na ekranu Kible sam uključiš
+      dodirom na „Uključi kompas“, i samo dok je taj ekran otvoren. Smjer Kible se i bez
+      senzora računa iz lokacije koju aplikacija već koristi za vakte. Očitanja se koriste
+      u tom trenutku i nigdje ne odlaze.</li>
     <li><strong>Držanje ekrana budnim</strong>: samo ako to sam uključiš, npr. tokom sehura.</li>
   </ul>
 

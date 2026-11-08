@@ -2,9 +2,15 @@
 // Jel’ vakat? by Divan — Service Worker
 // ────────────────────────────────────────────────────────────────────────────
 // Strategija:
-//   - App shell (HTML/manifest/ikone): network-first sa fallback na cache
-//     → korisnik uvijek dobija svježu verziju kad ima internet
+//   - App shell (HTML/manifest/ikone): stale-while-revalidate (od v3.11.0)
+//     → keš odgovara ODMAH, mreža osvježava keš u pozadini
+//     → nova verzija stiže kroz novi sw.js (CACHE_VERSION) i controllerchange
+//       reload u index.html, najkasnije pri sljedećem otvaranju
 //     → ako je offline, app i dalje radi iz keša
+//     Do v3.10.4 bilo je network-first BEZ timeouta: izmjereno 08.11.2026. da na
+//     Slow 4G topao keš ne skraćuje ništa (prvi prikaz 1,3 s hladan i topao), a na
+//     „lie-fi“ vezi korisnik s punim kešom gleda prazan ekran dok mreža ne odgovori
+//     (25 s u probi). Mjerni harness: scratchpad tehnika/mjerenje.mjs.
 //   - Statički asseti (fonts, ikone): cache-first
 //     → brže učitavanje, manje mreže
 //   - API pozivi (open-meteo, nominatim): network-only
@@ -13,7 +19,7 @@
 // Verzija keša se mijenja sa svakom novom verzijom app-a. Stari keš se briše.
 // ════════════════════════════════════════════════════════════════════════════
 
-const CACHE_VERSION = 'jv-v3.10.4';
+const CACHE_VERSION = 'jv-v3.11.0';
 const APP_SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -46,8 +52,12 @@ const API_HOSTS = [
 
 // ── INSTALL ─────────────────────────────────────────────────────────────────
 self.addEventListener('install', event => {
+  // v3.11.0: `cache:'reload'` zaobilazi HTTP keš preglednika (GitHub Pages šalje
+  // max-age=600), da novi radnik ne pokupi STARI index.html i tako „instalira“ staro.
   event.waitUntil(
-    caches.open(APP_SHELL_CACHE).then(cache => cache.addAll([...APP_SHELL, ...FONT_ASSETS]))
+    caches.open(APP_SHELL_CACHE).then(cache =>
+      cache.addAll([...APP_SHELL, ...FONT_ASSETS].map(u => new Request(u, { cache: 'reload' })))
+    )
   );
   // Aktiviraj odmah, ne čekaj na zatvaranje svih tabova
   self.skipWaiting();
@@ -81,7 +91,7 @@ self.addEventListener('fetch', event => {
                                       url.pathname === '/' ||
                                       url.pathname.endsWith('/index.html'));
   if (isShell || url.pathname === '/' || req.mode === 'navigate') {
-    event.respondWith(networkFirst(req));
+    event.respondWith(kesPaMreza(event, req));
     return;
   }
 
@@ -108,17 +118,29 @@ function kljucBezUpita(req) {
   return new Request(url.origin + url.pathname, { method: 'GET' });
 }
 
-async function networkFirst(req) {
+// v3.11.0: STALE-WHILE-REVALIDATE za app shell (zamijenio networkFirst).
+// Keš odgovara odmah; mreža ide u pozadini s `cache:'no-cache'` (uvijek do servera,
+// ne do HTTP keša preglednika) i osvježava keš za sljedeće otvaranje. Nova VERZIJA
+// ne zavisi od ovog puta: preglednik pri navigaciji provjerava sw.js, promijenjen
+// CACHE_VERSION instalira novog radnika s novim kešom, a controllerchange u
+// index.html osvježi stranicu čim ode u pozadinu. Bez keša (prvo otvaranje) čeka se
+// mreža, a bez mreže ostaje ista offline poruka kao prije.
+async function kesPaMreza(event, req) {
+  const cache = await caches.open(APP_SHELL_CACHE);
+  const kljuc = kljucBezUpita(req);
+  const cached = await cache.match(kljuc, { ignoreSearch: true });
+  const osvjezi = fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' })
+    .then(fresh => {
+      if (fresh && fresh.status === 200) return cache.put(kljuc, fresh.clone()).then(() => fresh);
+      return fresh;
+    });
+  if (cached) {
+    event.waitUntil(osvjezi.catch(() => {}));
+    return cached;
+  }
   try {
-    const fresh = await fetch(req);
-    if (fresh && fresh.status === 200) {
-      const cache = await caches.open(APP_SHELL_CACHE);
-      cache.put(kljucBezUpita(req), fresh.clone());
-    }
-    return fresh;
+    return await osvjezi;
   } catch (e) {
-    const cached = await caches.match(req, { ignoreSearch: true });
-    if (cached) return cached;
     // Fallback ako ni keš nema
     return new Response('Offline. App je dostupna kad imaš internet.', {
       status: 503,
